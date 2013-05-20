@@ -16,6 +16,8 @@ Options:
  --crosscompiler-dir <dir>          Defaults to "<toolchain-dir>/armv5te/sysroots/i686-oesdk-linux/usr/bin/armv5te-linux-gnueabi",
  --debian-build-dir <dir>           Defaults to "<root-path>/rootfs/debian/debian_install".
  --debian-installed-files-dir <dir> Defaults to "<root-path>/rootfs/debian/debian_install/debian_process".
+ --debian-version <version>         Allowed values are "squeeze", "wheezy" and "sid".
+                                    Defaults to "squeeze".
  --distr-version <version>          Allowed values are "min" and "max".
                                     Defaults to "max".
  --fs-type <type>                   FS type used for the image. Possible values
@@ -34,6 +36,10 @@ Options:
                                     script for nightly builds. Please note, that
                                     also have to specify the --root-dir option.
                                     Defaults to "no".
+ --packages-file <filepath>         Allows you to define a file that lists additional
+                                    packages to be installed into your rootfs.
+                                    Those packages will be added on top of those
+                                    preselected by your choice of "distr-version"
  --parallel-jobs <n>                Number of parallel jobs make calls.
                                     Defaults to "8".
  --root-dir <dir>                   Root directoy for the build.
@@ -62,6 +68,7 @@ ARG_CLEAN_ALL="no"
 ARG_CROSSCOMPILER_DIR=""
 ARG_DEBIAN_BUILD_DIR=""
 ARG_DEBIAN_INSTALLED_FILES_DIR=""
+ARG_DEBIAN_VERSION="squeeze"
 ARG_DISTR_VERSION="max"
 ARG_FS_TYPE="ext3"
 ARG_HOST_OS="Ubuntu"
@@ -70,6 +77,7 @@ ARG_KERNEL_DIR=""
 ARG_KERNEL_VERSION="2.6.33"
 ARG_LOG_FILE=""
 ARG_NIGHTLY_BUILD="no"
+ARG_PACKAGES_FILE=""
 ARG_PARALLEL_JOBS="8"
 ARG_ROOT_DIR=""
 ARG_START_MKMENUCONFIG="no"
@@ -121,6 +129,14 @@ do
 	    ;;
 	--debian-installed-files-dir=*)
 	    ARG_DEBIAN_INSTALLED_FILES_DIR=${1#*=}
+	    shift
+	    ;;
+	--debian-version)
+	    ARG_DEBIAN_VERSION=$2
+	    shift 2
+	    ;;
+	--debian-version=*)
+	    ARG_DEBIAN_VERSION=${1#*=}
 	    shift
 	    ;;
 	--distr-version)
@@ -185,6 +201,14 @@ do
 	    ;;
 	--nightly-build=*)
 	    ARG_NIGHTLY_BUILD=${1#*=}
+	    shift
+	    ;;
+	--packages-file)
+	    ARG_PACKAGES_FILE=$2
+	    shift 2
+	    ;;
+	--packages-file=*)
+	    ARG_PACKAGES_FILE=${1#*=}
 	    shift
 	    ;;
 	--parallel-jobs)
@@ -337,6 +361,8 @@ export debian_installed_files_path="$ARG_DEBIAN_INSTALLED_FILES_DIR"
 export bootloader_install_dir="$ARG_BOOTLOADER_INSTALL_DIR"
 export logfile_build="$ARG_LOG_FILE"
 export kernel_config="$ARG_USE_KERNEL_CONFIG"
+export packages_file="$ARG_PACKAGES_FILE"
+export debian_target_version="$ARG_DEBIAN_VERSION"
 
 # Check if nightly_build_mode is selected
 if [ "$ARG_NIGHTLY_BUILD" == 'yes' ]

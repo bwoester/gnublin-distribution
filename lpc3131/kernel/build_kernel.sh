@@ -69,12 +69,14 @@ fi
 	
 
 	#gnublin kernel build process
-	if [ "$kernel_config" = "" ]
+	if [ "$kernel_config" == "" ]
 	then
+		echo "using gnublin_defconfig" >> $logfile_build
 		make gnublin_defconfig
 	else
-		cp "$kernel_config" ./.config
-		make oldconfig
+		echo "using kernel config copied from '$kernel_config'" # >> $logfile_build
+		cp "$kernel_config" "$root_path/kernel/$kernel_name/.config"
+		yes "" | make oldconfig
 	fi
 	
 	if [ "$start_mkmenuconfig" = "yes" ]

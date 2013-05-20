@@ -13,8 +13,6 @@
 
 export debian_mirror_url="http://ftp.debian.org/debian/" # mirror for debian
 
-export debian_target_version="squeeze" # The version of debian that you want to build (ATM, 'squeeze', 'wheezy' and 'sid' are supported)
-
 # google nameserver it's reachable from everywere
 export nameserver_addr="8.8.8.8"  
 
@@ -97,6 +95,15 @@ then
 	#echo "minimal distribution choosen" >> 
 else
 	export additional_packages="$add_packages_base $add_packages_max"
+fi
+
+if [ -e "$packages_file" ]
+then
+  echo "Using custom packages file..." >>$logfile_build
+  packagesFileContent=`cat $packages_file`
+  echo "Custom packages read from file:" >>$logfile_build
+  echo $packagesFileContent >>$logfile_build
+  export additional_packages="$additional_packages $packagesFileContent"
 fi
 
 echo "Packages to install: $additional_packages" >>$logfile_build
