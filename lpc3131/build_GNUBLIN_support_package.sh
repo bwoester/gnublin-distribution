@@ -370,6 +370,9 @@ then
 	export nightly_build="yes"
 fi
 
+# set the kernel repository name depending on the selected kernel version
+export git_name_kernel="gnublin-lpc3131-$ARG_KERNEL_VERSION"
+
 export build_time="$(date '+%D %H:%M') ->"
 export user=$(whoami)
 
