@@ -410,7 +410,16 @@ then
 		
 	if [ "$ARG_CLEAN_ALL" == "yes" ]
 	then
-		sudo -s -E rm -rf $root_path/kernel/$kernel_name
+		if [ -d $root_path/kernel/linux-2.6.33-lpc313x ]; then
+        	sudo -s -E rm -rf $root_path/kernel/linux-2.6.33-lpc313x
+		fi
+		if [ -d $root_path/kernel/linux-3.3.0-lpc313x ]; then
+        	sudo -s -E rm -rf $root_path/kernel/linux-3.3.0-lpc313x
+		fi
+		if [ -d $root_path/kernel/qemu_kernel ]; then
+        	sudo -s -E rm -rf $root_path/kernel/qemu_kernel
+		fi
+		
 		sudo -s -E rm -rf $root_path/Downloads/*
 		sudo -s -E rm -rf $root_path/output
 		if [ -d $root_path/backup ]; then
