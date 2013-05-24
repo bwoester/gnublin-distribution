@@ -18,7 +18,10 @@ Options:
  --debian-installed-files-dir <dir> Defaults to "<root-path>/rootfs/debian/debian_install/debian_process".
  --debian-version <version>         Allowed values are "squeeze", "wheezy" and "sid".
                                     Defaults to "squeeze".
- --distr-version <version>          Allowed values are "min" and "max".
+ --distr-version <version>          Allowed values are "empty", "min" and "max".
+                                    You can use the value "empty" together with the option
+                                    --packages-file to build a distribution containing only
+                                    your custom packages.
                                     Defaults to "max".
  --fs-type <type>                   FS type used for the image. Possible values
                                     include "ext2" and "ext3".
