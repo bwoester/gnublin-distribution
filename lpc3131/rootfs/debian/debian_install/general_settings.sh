@@ -23,15 +23,24 @@ export repos_root_url="git://github.com/embeddedprojects"
 export std_kernel_pkg_path="$debian_installed_files_path"                                    
 
 # where to get the qemu kernel
-export qemu_kernel_pkg_path="http://www.hs-augsburg.de/~ingmar_k/gnublin/kernels/2.6.33"  
+export qemu_kernel_pkg_path="http://www.hs-augsburg.de/~ingmar_k/gnublin/kernels/${kernel_version}"
 
 # qemu kernel file name
-export qemu_kernel_pkg_name="kernel_2.6.33-gnublin-qemu-1.2_1335647673.tar.bz2"
+if [ $kernel_version == "2.6.33" ]
+then
+	export qemu_kernel_pkg_name="kernel_2.6.33-gnublin-qemu-1.2_1335647673.tar.bz2"
+elif [ $kernel_version == "3.3.0" ]
+then
+	export qemu_kernel_pkg_name="kernel_3.3.0-gnublin-qemu-1.0_1348953287.tar.bz2"
+else
+	echo "Don't know how to build qemu_kernel_pkg_name for kernel version ''." >> $logfile_build
+	exit 0
+fi
 
 # where to put the files in general
 export output_dir_base="$debian_installed_files_path"                                 
 
-export std_kernel_pkg_name="linux-2.6.33.tar.gz" # standard kernel file name
+export std_kernel_pkg_name="linux-${kernel_version}.tar.gz" # standard kernel file name
 
 #Kernel package name before compression
 export default_kernel_pkg_name="$kernel_name"

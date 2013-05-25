@@ -19,9 +19,10 @@ echo "#############################################" >> $logfile_build
 
 
 
-
 trap cleanup INT
 source $debian_build_path/build_functions.sh		 # functions called by this main build script
+
+
 
 #########################
 ###### Main script ######
@@ -37,13 +38,6 @@ else
 	echo "Output directory '${output_dir}' already created."
 fi
 
-#if [ "$?" = "0" ]
-#then
-#	echo "Output directory '${output_dir}' successfully created."
-#else
-#	echo "ERROR while trying to create the output directory '${output_dir}'. Exiting now!"
-#	exit 1
-#fi
 
 if [ ! -d "${output_dir}/tmp" ]
 then
@@ -53,13 +47,6 @@ else
 	echo "Output directory '${output_dir}/tmp' already created."
 fi
 
-#if [ "$?" = "0" ]
-#then
-#	echo "Subfolder 'tmp' of output directory '${output_dir}' successfully created."
-#else
-#	echo "ERROR while trying to create the 'tmp' subfolder '${output_dir}/tmp'. Exiting now!"
-#	exit 2
-#fi
 
 check_n_install_prerequisites # see if all needed packages are installed and if the versions are sufficient
 
